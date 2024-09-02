@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Hospital Management Admin Redirect",
+  "description": "A Chrome extension to redirect admins to the admin login page of the hospital management system.",
+  "version": "1.0",
+  "action": {
+    "default_popup": "",
+    "default_icon": "icon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["tabs"]
+}
