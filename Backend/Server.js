@@ -17,12 +17,12 @@ cloudinary.v2.config({
 const PORT = process.env.PORT || 5000;
 
 // MongoDB URI
-const MONGO_URI = process.env.MONOGO_URI;
+const MONOGO_URI = process.env.MONOGO_URI;
 
 const startServer = async () => {
   try {
     // Connect to MongoDB
-    await mongoose.connect(MONGO_URI, {
+    await mongoose.connect(MONOGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
