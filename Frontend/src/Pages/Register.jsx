@@ -15,9 +15,11 @@ const Register = () => {
   const [dob, setDob] = useState("");
   const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState("false");
 
   const navigateTo = useNavigate();
 
+//registering patients
   const handleRegister = async (e) =>{
     e.preventDefault();
     try {
@@ -32,15 +34,6 @@ const Register = () => {
       toast.success(res.data.message);
       setIsAuthenticated(true);
       navigateTo("/");
-      // Reset form fields
-      // setFirstName("");
-      // setLastName("");
-      // setEmail("");
-      // setPhone("");
-      // setCnic("");
-      // setDob("");
-      // setGender("");
-      // setPassword("");
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -53,90 +46,105 @@ const Register = () => {
 
   return (
     <>
-      <div className="container form-component register-form">
-        <h2>Sign Up</h2>
-        <p>Please Sign Up To Continue</p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat culpa
-          voluptas expedita itaque ex, totam ad quod error?
-        </p>
-        <form onSubmit={handleRegister}>
-          <div>
+    <div className="container form-component register-form">
+      <h2>Sign Up</h2>
+      <p>Please Sign Up To Continue</p>
+      <p>
+        In order to use the services of the FA Care you have to register yourself first by filling
+        the form below. You already login? 
+        Click the login button below
+      </p>
+      <form onSubmit={handleRegister}>
+        <div>
+          <input
+            type="text"
+            placeholder="First Name"
+            value={firstname}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Last Name"
+            value={lastname}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="number"
+            placeholder="Mobile Number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </div>
+        <div>
+          <input
+            type="number"
+            placeholder="CNIC"
+            value={cnic}
+            onChange={(e) => setCnic(e.target.value)}
+          />
+          <input
+            type="date"
+            placeholder="Date of Birth"
+            value={dob}
+            onChange={(e) => setDob(e.target.value)}
+          />
+        </div>
+        <div>
+          <select value={gender} onChange={(e) => setGender(e.target.value)}>
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <div style={{ position: "relative" }}>
             <input
-              type="text"
-              placeholder="First Name"
-              value={firstname}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              value={lastname}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              type="number"
-              placeholder="Mobile Number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-          </div>
-          <div>
-            <input
-              type="number"
-              placeholder="CNIC"
-              value={cnic}
-              onChange={(e) => setCnic(e.target.value)}
-            />
-            <input
-              type={"date"}
-              placeholder="Date of Birth"
-              value={dob}
-              onChange={(e) => setDob(e.target.value)}
-            />
-          </div>
-          <div>
-            <select value={gender} onChange={(e) => setGender(e.target.value)}>
-              <option value="">Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-            <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-          </div>
-          <div
-            style={{
-              gap: "10px",
-              justifyContent: "flex-end",
-              flexDirection: "row",
-            }}
-          >
-            <p style={{ marginBottom: 0 }}>Already Registered?</p>
-            <Link
-              to={"/login"}
-              style={{ textDecoration: "none", color: "#271776ca" }}
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                position: "absolute",
+                right: 10,
+                top: 12,
+                cursor: "pointer",
+              }}
             >
-              Login Now
-            </Link>
+              {showPassword ? "👁️" : "👁️‍🗨️"}
+            </span>
           </div>
-          <div style={{ justifyContent: "center", alignItems: "center" }}>
-            <button type="submit">Register</button>
-          </div>
-        </form>
-      </div>
-    </>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+            justifyContent: "flex-end",
+            flexDirection: "row",
+          }}
+        >
+          <p style={{ marginBottom: 0 }}>Already Registered?</p>
+          <Link
+            to={"/login"}
+            style={{ textDecoration: "none", color: "#271776ca" }}
+          >
+            Login Now
+          </Link>
+        </div>
+        <div style={{ justifyContent: "center", alignItems: "center" }}>
+          <button type="submit">Register</button>
+        </div>
+      </form>
+    </div>
+  </>
   );
 };
 

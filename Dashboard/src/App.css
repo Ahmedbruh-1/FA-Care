@@ -1,11 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100..900&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   overflow-x: hidden;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Poppins", sans-serif; /* Changed to Poppins */
 }
+
 body {
   background: #777575f2;
 }
@@ -51,7 +53,6 @@ body {
   padding-bottom: 60px;
   min-height: 100vh;
   background: #e5e5e5;
-
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -155,6 +156,9 @@ body {
   }
 }
 
+/* Dashboard and other components remain unchanged, just applying the new font */
+
+
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -191,18 +195,26 @@ body {
   font-size: 34px;
 }
 .dashboard .banner:first-child .firstBox .content div h5 {
-  color: #2200ff;
+  color: #000000;
+  font-style: normal;
+  font-family:  'Playfair Display', serif;
+
 }
 .dashboard .banner:first-child .firstBox .content p {
   font-size: 16px;
-}
+  font-style: normal;
+  font-family:  'Playfair Display', serif;}
 .dashboard .banner:first-child .secondBox {
   background: #000000f2;
+  font-style:oblique ;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   color: #fff;
 }
 .dashboard .banner:first-child .thirdBox {
-  color: #2200ff;
+  color: #000000;
   background: #fff;
+  font-style:oblique ;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 .dashboard .banner:first-child .secondBox,
 .dashboard .banner:first-child .thirdBox {
@@ -360,7 +372,7 @@ body {
 }
 .sidebar svg:hover {
   background: #fff;
-  color: #0000f7f2;
+  color: #5353fff2;
   border-radius: 8px;
   transition: 0.3s;
   cursor: pointer;
@@ -416,7 +428,7 @@ body {
 }
 
 .doctors h1 {
-  color: #3939d9f2;
+  color: #000000;
   margin-bottom: 30px;
   font-size: 2.3rem;
 }
@@ -477,7 +489,7 @@ body {
   gap: 20px;
 }
 .messages .banner .card {
-  background: #076efe;
+  background: #687382;
   border-radius: 12px;
   padding: 20px;
 }

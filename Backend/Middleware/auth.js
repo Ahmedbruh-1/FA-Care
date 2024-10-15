@@ -3,7 +3,6 @@ import ErrorHandler from "./errorMiddleware.js";
 import User from "../Models/userSchema.js";
 import jwt from "jsonwebtoken";
 
-
 // Authentication for Admin
 export const isAdminAuthenticated = catchAsyncErrors(async (req, res, next) => {
     const token = req.cookies.adminToken;
@@ -37,6 +36,27 @@ export const isPatientAuthenticated = catchAsyncErrors(async (req, res, next) =>
     req.user = await User.findById(decoded.id);
     
     if (req.user.role !== "Patient") {
+        return next(new ErrorHandler(
+            `${req.user.role} Not Authorized For this Resource!`,
+            403
+        ));
+    }
+
+    next();
+});
+
+// Authentication for Doctor
+export const isDoctorAuthenticated = catchAsyncErrors(async (req, res, next) => {
+    const token = req.cookies.doctorToken; // Use a specific token for doctors
+
+    if (!token) {
+        return next(new ErrorHandler("Doctor is Not Authenticated!", 400));
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    req.user = await User.findById(decoded.id);
+    
+    if (req.user.role !== "Doctor") {
         return next(new ErrorHandler(
             `${req.user.role} Not Authorized For this Resource!`,
             403

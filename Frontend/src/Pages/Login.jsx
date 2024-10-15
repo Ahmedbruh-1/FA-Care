@@ -9,6 +9,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const navigateTo = useNavigate();
 
@@ -43,58 +45,84 @@ const Login = () => {
 
   return (
     <div className="container form-component login-form">
-      <h2>Sign In</h2>
-      <p>Welcome back! Please login to your account.</p>
-      <form onSubmit={handleLogin}>
+    <h2>Sign In</h2>
+    <p>Welcome back! Please login to your account.</p>
+    <form onSubmit={handleLogin}>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        required
+      />
+      <div style={{ position: "relative" }}>
         <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           required
         />
+        <span
+          onClick={() => setShowPassword(!showPassword)}
+          style={{
+            position: "absolute",
+            right: 10,
+            top: 12,
+            cursor: "pointer",
+          }}
+        >
+          {showPassword ? "👁️" : "👁️‍🗨️"}
+        </span>
+      </div>
+      <div style={{ position: "relative" }}>
         <input
-          type="password"
+          type={showConfirmPassword ? "text" : "password"}
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirm Password"
           required
         />
-        <div
+        <span
+          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "10px",
+            position: "absolute",
+            right: 10,
+            top: 12,
+            cursor: "pointer",
           }}
         >
-          <p style={{ marginBottom: 0 }}>Not Registered?</p>
-          <Link
-            to={"/register"}
-            style={{ textDecoration: "none", color: "#007bff" }} // Example color
-          >
-            Register Here
-          </Link>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          {showConfirmPassword ? "👁️" : "👁️‍🗨️"}
+        </span>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "10px",
+        }}
+      >
+        <p style={{ marginBottom: 0 }}>Not Registered?</p>
+        <Link
+          to={"/register"}
+          style={{ textDecoration: "none", color: "#007bff" }} // Example color
         >
-          <button type="submit">Login</button>
-        </div>
-      </form>
-    </div>
-  );
+          Register Here
+        </Link>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <button type="submit">Login</button>
+      </div>
+    </form>
+  </div>
+);
 };
 
 export default Login;

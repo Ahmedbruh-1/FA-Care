@@ -10,6 +10,7 @@ import AddNewDoctor from "./Components/AddNewDoctor";
 import AddNewAdmin from "./Components/AddNewAdmin";
 import Sidebar from "./Components/Sidebar";
 import Login from "./Components/Login";
+import Reports from './Components/Reports';
 import { Context } from './main';
 import "./App.css"
 
@@ -46,6 +47,7 @@ const App = () => {
           <Route path="/doctors" element={<Doctors />} />
           <Route path="/doctor/addnew" element={<AddNewDoctor />} />
           <Route path="/admin/addnew" element={<AddNewAdmin />} />
+          <Route path="/reports" element={<Reports />} />
           <Route path="/login" element={<Login />} />
         </Routes>
         <ToastContainer position="top-center" />

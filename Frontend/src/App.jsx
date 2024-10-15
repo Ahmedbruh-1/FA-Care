@@ -8,6 +8,7 @@ import Register from "./Pages/Register";
 import Footer from "./Components/Footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import ReportForm from "./Pages/ReportForm";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./Components/Navbar";
 import { Context } from "./main";
@@ -44,6 +45,7 @@ const App = () => {
         <Route path="/appointment" element={<Appointment />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/reportForm" element={<ReportForm/>} />
         <Route path="/login" element={<Login />} />
       </Routes>
       <Footer />

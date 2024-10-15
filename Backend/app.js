@@ -9,6 +9,7 @@ import { errorMiddleware } from "./Middleware/errorMiddleware.js";
 import UserRouter from "./Router/UserRouter.js";
 import cloudinary from "cloudinary";
 import AppointmentRouter from "./Router/AppointmentRouter.js";
+import ReportRouter from "./Router/ReportRouter.js";
 
 const app = express();
 
@@ -52,6 +53,7 @@ app.use(
 app.use("/api/v1/message", MessageRouter);
 app.use("/api/v1/user", UserRouter);
 app.use("/api/v1/appointment", AppointmentRouter);
+app.use("/api/v1/report", ReportRouter);
 
 // Database connection
 dbconnection();

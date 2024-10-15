@@ -2,8 +2,7 @@ import { catchAsyncErrors } from "../Middleware/catchAsyncErrors.js";
 import ErrorHandler from "../Middleware/errorMiddleware.js";
 import { Appointment } from "../Models/AppointmentSchema.js";
 import User from "../Models/userSchema.js";
-//import { sendAppointmentEmail } from '../EmailService.js';
-//import { sendAppointmentConfirmation } from '../TwilioSwervice.js'; // Import the Twilio service
+import { sendAppointmentEmail } from '../EmailService.js'; // Import the email service
 
 export const postAppointment = catchAsyncErrors(async (req, res, next) => {
   const {
@@ -22,8 +21,7 @@ export const postAppointment = catchAsyncErrors(async (req, res, next) => {
     address,
   } = req.body;
 
-  console.log(" phone cnic dob gender appointment_date department doctor_firstName doctor_lastName hasVisited address +++++", phone, cnic, dob, gender, appointment_date, department, doctor_firstName, doctor_lastName, hasVisited, address);
-
+  // Check for missing fields
   if (
     !firstname ||
     !lastname ||
@@ -48,6 +46,7 @@ export const postAppointment = catchAsyncErrors(async (req, res, next) => {
     doctorDepartment: department,
   });
 
+  // Check if doctor exists
   if (isConflict.length === 0) {
     return next(new ErrorHandler("Doctor not found", 404));
   }
@@ -64,6 +63,7 @@ export const postAppointment = catchAsyncErrors(async (req, res, next) => {
   const doctorId = isConflict[0]._id;
   const patientId = req.user._id;
 
+  // Create an appointment
   const appointment = await Appointment.create({
     firstName: firstname,
     lastName: lastname,
@@ -84,16 +84,15 @@ export const postAppointment = catchAsyncErrors(async (req, res, next) => {
     patientId,
   });
 
-  // Sending confirmation SMS to the user
-  sendAppointmentConfirmation(phone, `${doctor_firstName} ${doctor_lastName}`, department);
+  // Sending confirmation email to the user
+  await sendAppointmentEmail(email, `${doctor_firstName} ${doctor_lastName}`, department);
 
   res.status(200).json({
     success: true,
     appointment,
-    message: "Appointment Sent, Email Notification Sent, and SMS Notification Sent!",
+    message: "Appointment Sent, Email Notification Sent!",
   });
 });
-
 // Getting all appointments
 export const getAllAppointments = catchAsyncErrors(async (req, res, next) => {
   const appointments = await Appointment.find();
@@ -104,26 +103,28 @@ export const getAllAppointments = catchAsyncErrors(async (req, res, next) => {
 });
 
 // Update Appointment Status
-export const updateAppointmentStatus = catchAsyncErrors(async (req, res, next) => {
-  const { id } = req.params;
-  let appointment = await Appointment.findById(id);
+export const updateAppointmentStatus = catchAsyncErrors(
+  async (req, res, next) => {
+    const { id } = req.params;
+    let appointment = await Appointment.findById(id);
 
-  if (!appointment) {
-    return next(new ErrorHandler("Error Finding Appointment", 404));
+    if (!appointment) {
+      return next(new ErrorHandler("Error Finding Appointment", 404));
+    }
+
+    appointment = await Appointment.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Appointment Status Updated",
+      appointment,
+    });
   }
-
-  appointment = await Appointment.findByIdAndUpdate(id, req.body, {
-    new: true,
-    runValidators: true,
-    useFindAndModify: false,
-  });
-
-  res.status(200).json({
-    success: true,
-    message: "Appointment Status Updated",
-    appointment,
-  });
-});
+);
 
 // Delete Appointment
 export const deleteAppointment = catchAsyncErrors(async (req, res, next) => {
